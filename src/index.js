@@ -11,7 +11,6 @@ const app = express();
 app.use(cors());
 app.use(json());
 
-// Création et ouverture de la base de données
 const db = new sqlite3.Database('./database.db', (err) => {
   if (err) {
     console.error('Error opening database', err);
@@ -20,9 +19,7 @@ const db = new sqlite3.Database('./database.db', (err) => {
   }
 });
 
-// Utilisation de db.serialize pour s'assurer que les requêtes sont exécutées séquentiellement
 db.serialize(() => {
-  // Créer la table employees si elle n'existe pas
   db.run(`
     CREATE TABLE IF NOT EXISTS employees (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -37,7 +34,6 @@ db.serialize(() => {
     }
   });
 
-  // Créer la table devices si elle n'existe pas
   db.run(`
     CREATE TABLE IF NOT EXISTS devices (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -55,7 +51,6 @@ db.serialize(() => {
   });
 });
 
-// Routes
 app.use('/api/employees', employeeRoutes);
 app.use('/api/devices', deviceRoutes);
 

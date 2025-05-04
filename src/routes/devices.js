@@ -1,9 +1,8 @@
 import { Router } from 'express';
-import { all, run } from '../db.js'; // Assurez-vous d'avoir la logique pour exécuter les requêtes SQL
+import { all, run } from '../db.js';
 
 const router = Router();
 
-// Récupérer tous les appareils
 router.get('/', async (req, res) => {
   try {
     const devices = await all('SELECT * FROM devices');
@@ -13,7 +12,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Récupérer les appareils d'un employé par ID
 router.get('/owner/:ownerId', async (req, res) => {
   const { ownerId } = req.params;
   try {
@@ -24,7 +22,6 @@ router.get('/owner/:ownerId', async (req, res) => {
   }
 });
 
-// Ajouter un nouvel appareil
 router.post('/', async (req, res) => {
   const { device_name, type, owner_id } = req.body;
   try {
@@ -35,7 +32,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Modifier un appareil par ID
 router.patch('/:id', async (req, res) => {
   const { device_name, type, owner_id } = req.body;
   const { id } = req.params;
@@ -47,12 +43,11 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-// Supprimer un appareil par ID
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     await run('DELETE FROM devices WHERE id = ?', [id]);
-    res.status(204).send(); // Pas de contenu après suppression
+    res.status(204).send();
   } catch (error) {
     res.status(500).json({ error: 'Error deleting device' });
   }

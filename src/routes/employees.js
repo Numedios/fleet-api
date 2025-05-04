@@ -16,10 +16,8 @@ router.post('/', async (req, res) => {
   const { name, role } = req.body;
   try {
     const result = await run('INSERT INTO employees (name, role) VALUES (?, ?)', [name, role]);
-    console.log("\n", result, 'insert employees succes' )
     res.status(201).json({ id: result.id, name, role });
   } catch (error) {
-    console.log("\n", error, 'Error adding employee' )
     res.status(500).json({ error: 'Error adding employee' });
   }
 });
@@ -39,7 +37,7 @@ router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     await run('DELETE FROM employees WHERE id = ?', [id]);
-    res.status(204).send(); // Pas de contenu après suppression
+    res.status(204).send();
   } catch (error) {
     res.status(500).json({ error: 'Error deleting employee' });
   }
