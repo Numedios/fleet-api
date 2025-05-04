@@ -6,4 +6,5 @@ Web app built fleet api sqlite3
 
 ```bash
 pnpm install
+pnpm postinstall
 pnpm run start
