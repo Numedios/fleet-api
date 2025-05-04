@@ -7,7 +7,6 @@ import deviceRoutes from './routes/devices.js';
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(json());
 
